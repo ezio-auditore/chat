@@ -26,6 +26,15 @@
         socket.on('message', function (msg) {
           $scope.messages.push(msg);
           $scope.$apply();
+          Push.create("New Message from "+msg.name, {
+       body:msg.text,
+    icon: 'icon.png',
+    requireInteraction:true,
+    onClick: function () {
+        window.focus();
+        this.close();
+    }
+});
         });
 
         socket.on('roster', function (names) {
@@ -49,9 +58,7 @@
     <div class="container" ng-controller="ChatController">
       <div class="navbar navbar-fixed-top navbar-inverse">
         <div class="navbar-inner">
-          <div class="pull-right">
-            <a href="https://c9.io" class="brand">Cloud9 IDE</a>
-          </div>
+          
         </div>
       </div>
       <div class="page-header">
@@ -93,6 +100,7 @@
       </div>
     </div>
     <script src="/socket.io/socket.io.js"></script>
+    <script src="/js/push.js"></script>
     <script src="/js/jquery.min.js"></script>
     <script src="/js/bootstrap.min.js"></script>
     <script src="/js/angular.min.js"></script>
